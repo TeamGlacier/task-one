@@ -3,8 +3,8 @@
 if (isset($_POST['login-submit'])) {
 	require 'dbh.inc.php';
 
-	$mailusername = $_POST['useremail'];
-	$password = $_POST['userpwd'];
+	$mailusername = $_POST['email'];
+	$password = $_POST['password'];
 
 	if (empty($mailusername)  || empty($password)) {
 		header("Location: ../login.php?error=emptyfields");
@@ -12,7 +12,7 @@ if (isset($_POST['login-submit'])) {
 	}
 	else{
 
-		$sql = "SELECT * FROM users WHERE username=? OR email=?";
+		$sql = "SELECT * FROM users WHERE username=? OR email=?;";
 
 		$stmt = mysqli_stmt_init($conn);
 		if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -30,7 +30,7 @@ if (isset($_POST['login-submit'])) {
 				$pwdCheck = password_verify($password, $row['password']);
 
 				if ($pwdCheck == false) {
-					header("Location: ../login.php?error=wrongPwd");
+					header("Location: ../index.php?error=wrongPwd");
 					exit();
 				}
 				else if($pwdCheck == true){
@@ -44,7 +44,7 @@ if (isset($_POST['login-submit'])) {
 					
 				}
 				else{
-					header("Location: ../login.php?error=wrongPass");
+					header("Location: ../login.php?error=wrongpassword");
 					exit();
 				}
 			}

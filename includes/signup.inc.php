@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
 
 //if empty input
 	if (empty($fullname) || empty($username) || empty($email) || empty($password) || empty($passwordRepeat)) {
-		header("Location: ../signup.php?error=emptyfields&fullname="); //. $fullname."&username=". $username."&email".$email);
+		header("Location: ../signup.php?error=emptyfields&fullname=" . $fullname."&username=". $username."&email".$email);
 		exit();
 	}
 	else if(!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $username) ){
@@ -21,17 +21,17 @@ if (isset($_POST['submit'])) {
 	}
 	//if email is invalid return error
 	elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-		header("Location: ../signup.php?error=invalidemail&fullname=");
+		header("Location: ../signup.php?error=invalidemail&fullname=" . $username);
 		exit();
 	}
 	//checking for valid password
 	elseif(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
-		header("Location: ../signup.php?error=invalidusername&email=");
+		header("Location: ../signup.php?error=invalidusername&email=" . $email);
 		exit();
 	}
 	//check confirmed password
 	else if($password !== $passwordRepeat){
-		header("Location: ../signup.php?error=passwordRepeat&username=");
+		header("Location: ../signup.php?error=passwordRepeat&username=" . $username."&email".$email);
 		exit();
 	}
 	//if username is already taken
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 			mysqli_stmt_store_result($stmt);
 			$resultCheck = mysqli_stmt_num_rows($stmt);
 			if ($resultCheck > 0) {
-				header("Location: ../signup.php?error=usernametaken");// .$username);
+				header("Location: ../signup.php?error=usernametaken" .$username);
 				exit();
 			}
 			else{
